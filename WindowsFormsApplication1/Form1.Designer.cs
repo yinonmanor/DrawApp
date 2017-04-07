@@ -33,6 +33,8 @@
             this.colorButton = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.lineButton = new System.Windows.Forms.Button();
+            this.polygonButton = new System.Windows.Forms.Button();
+            this.polygonTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,39 +49,58 @@
             // 
             // circleButton
             // 
-            this.circleButton.Location = new System.Drawing.Point(507, 12);
+            this.circleButton.Location = new System.Drawing.Point(629, 12);
             this.circleButton.Name = "circleButton";
             this.circleButton.Size = new System.Drawing.Size(75, 23);
             this.circleButton.TabIndex = 1;
-            this.circleButton.Text = "drow circle";
+            this.circleButton.Text = "עיגול";
             this.circleButton.UseVisualStyleBackColor = true;
             this.circleButton.Click += new System.EventHandler(this.circleButton_Click);
             // 
             // colorButton
             // 
-            this.colorButton.Location = new System.Drawing.Point(318, 12);
+            this.colorButton.Location = new System.Drawing.Point(35, 12);
             this.colorButton.Name = "colorButton";
             this.colorButton.Size = new System.Drawing.Size(91, 23);
             this.colorButton.TabIndex = 5;
-            this.colorButton.Text = "choose color";
+            this.colorButton.Text = "בחר צבע";
             this.colorButton.UseVisualStyleBackColor = true;
             this.colorButton.Click += new System.EventHandler(this.colorButton_Click);
             // 
             // lineButton
             // 
-            this.lineButton.Location = new System.Drawing.Point(667, 12);
+            this.lineButton.Location = new System.Drawing.Point(732, 12);
             this.lineButton.Name = "lineButton";
             this.lineButton.Size = new System.Drawing.Size(75, 23);
             this.lineButton.TabIndex = 9;
-            this.lineButton.Text = "draw line";
+            this.lineButton.Text = "קו";
             this.lineButton.UseVisualStyleBackColor = true;
             this.lineButton.Click += new System.EventHandler(this.lineButton_Click);
+            // 
+            // polygonButton
+            // 
+            this.polygonButton.Location = new System.Drawing.Point(525, 12);
+            this.polygonButton.Name = "polygonButton";
+            this.polygonButton.Size = new System.Drawing.Size(75, 23);
+            this.polygonButton.TabIndex = 10;
+            this.polygonButton.Text = "מצולע משוכלל";
+            this.polygonButton.UseVisualStyleBackColor = true;
+            this.polygonButton.Click += new System.EventHandler(this.polygonButton_Click);
+            // 
+            // polygonTextBox
+            // 
+            this.polygonTextBox.Location = new System.Drawing.Point(524, 46);
+            this.polygonTextBox.Name = "polygonTextBox";
+            this.polygonTextBox.Size = new System.Drawing.Size(76, 20);
+            this.polygonTextBox.TabIndex = 11;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1023, 634);
+            this.Controls.Add(this.polygonTextBox);
+            this.Controls.Add(this.polygonButton);
             this.Controls.Add(this.lineButton);
             this.Controls.Add(this.colorButton);
             this.Controls.Add(this.circleButton);
@@ -88,6 +109,7 @@
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -98,6 +120,8 @@
         private System.Windows.Forms.Button colorButton;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Button lineButton;
+        private System.Windows.Forms.Button polygonButton;
+        private System.Windows.Forms.TextBox polygonTextBox;
     }
 }
 

@@ -15,7 +15,10 @@ namespace WindowsFormsApplication1
         LINE_FIRST_DOT,
         LINE_SECOND_DOT,
         CERCLE_POSITION,
-        RADIUS
+        RADIUS,
+        POLYGON_CENTER,
+        POLYGON_HEAD
+
     };
     public partial class Form1 : Form
     {      
@@ -34,7 +37,7 @@ namespace WindowsFormsApplication1
             pictureBox1.Image = bitMap;// new Bitmap(700, 700);
             this.BackColor = Color.PowderBlue;
             pictureBox1.BackColor = Color.White;
-            
+            polygonTextBox.Enabled = false;
             pictureBox1.MouseDown += (mouseDownEvent);
             pictureBox1.MouseUp += (mouseUpEvent);
            // drawLine(100, 100, 100, 150, currentColor);
@@ -74,6 +77,19 @@ namespace WindowsFormsApplication1
                     currentRadius = Math.Abs(currentX - e.X)>Math.Abs(currentY-e.Y)? Math.Abs(currentX - e.X): Math.Abs(currentY - e.Y);
                     drawCircle(currentX, currentY, currentRadius, currentColor, bitMap);
                     stateFlag = State.CERCLE_POSITION;
+                    break;
+
+                case State.POLYGON_CENTER:
+                    currentX = e.X;
+                    currentY = e.Y;
+                    stateFlag = State.POLYGON_HEAD;
+                    break;
+
+                case State.POLYGON_HEAD:
+                    int sides = Convert.ToInt32(polygonTextBox.Text);
+                    currentRadius = Math.Abs(currentX - e.X) > Math.Abs(currentY - e.Y) ? Math.Abs(currentX - e.X) : Math.Abs(currentY - e.Y);                   
+                    drawPolygon(currentX, currentY, currentRadius,sides);
+                    stateFlag = State.POLYGON_CENTER;
                     break;
             }
             
@@ -200,11 +216,7 @@ namespace WindowsFormsApplication1
         public void circleButton_Click(object sender, EventArgs e)
         {
             stateFlag = State.CERCLE_POSITION;
-            //drawLine(100, 100, 100, 150, Color.Black);
-            /*int xCenter = Convert.ToInt32(xCenterTextBox.Text);
-            int yCenter = Convert.ToInt32(yCenterTextBox.Text);
-            int radius = Convert.ToInt32(radiusTextBox.Text);
-            drawCircle(xCenter, yCenter, radius, currentColor, bitMap);*/
+            polygonTextBox.Enabled = false;
         }
 
         private void colorButton_Click(object sender, EventArgs e)
@@ -223,6 +235,31 @@ namespace WindowsFormsApplication1
         private void lineButton_Click(object sender, EventArgs e)
         {
             stateFlag = State.LINE_FIRST_DOT;
+            polygonTextBox.Enabled = false;
+        }
+
+        private void polygonButton_Click(object sender, EventArgs e)
+        {
+            stateFlag = State.POLYGON_CENTER;
+            polygonTextBox.Enabled = true;
+        }
+
+        private void drawPolygon(int headX,int headY,int radius,int sides)
+        {
+            try
+            {
+                if (sides < 3)
+                {
+                    throw new Exception("מצולע חייב להיות בעל שלוש צלעות לפחות");
+                }
+                float step = 360 / sides;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
     }
 }
