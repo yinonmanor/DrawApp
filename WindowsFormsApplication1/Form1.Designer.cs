@@ -35,16 +35,21 @@
             this.yCenterTextBox = new System.Windows.Forms.TextBox();
             this.colorButton = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.radiusLable = new System.Windows.Forms.Label();
+            this.xCenterLable = new System.Windows.Forms.Label();
+            this.yCenterLable = new System.Windows.Forms.Label();
+            this.lineButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 1);
+            this.pictureBox1.Location = new System.Drawing.Point(7, 122);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(768, 569);
+            this.pictureBox1.Size = new System.Drawing.Size(735, 500);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click_1);
             // 
             // circleButton
             // 
@@ -79,7 +84,7 @@
             // 
             // colorButton
             // 
-            this.colorButton.Location = new System.Drawing.Point(828, 381);
+            this.colorButton.Location = new System.Drawing.Point(748, 12);
             this.colorButton.Name = "colorButton";
             this.colorButton.Size = new System.Drawing.Size(91, 23);
             this.colorButton.TabIndex = 5;
@@ -87,11 +92,52 @@
             this.colorButton.UseVisualStyleBackColor = true;
             this.colorButton.Click += new System.EventHandler(this.colorButton_Click);
             // 
+            // radiusLable
+            // 
+            this.radiusLable.AutoSize = true;
+            this.radiusLable.Location = new System.Drawing.Point(785, 44);
+            this.radiusLable.Name = "radiusLable";
+            this.radiusLable.Size = new System.Drawing.Size(43, 13);
+            this.radiusLable.TabIndex = 6;
+            this.radiusLable.Text = "Radius:";
+            // 
+            // xCenterLable
+            // 
+            this.xCenterLable.AutoSize = true;
+            this.xCenterLable.Location = new System.Drawing.Point(781, 70);
+            this.xCenterLable.Name = "xCenterLable";
+            this.xCenterLable.Size = new System.Drawing.Size(50, 13);
+            this.xCenterLable.TabIndex = 7;
+            this.xCenterLable.Text = "X center:";
+            // 
+            // yCenterLable
+            // 
+            this.yCenterLable.AutoSize = true;
+            this.yCenterLable.Location = new System.Drawing.Point(781, 96);
+            this.yCenterLable.Name = "yCenterLable";
+            this.yCenterLable.Size = new System.Drawing.Size(50, 13);
+            this.yCenterLable.TabIndex = 8;
+            this.yCenterLable.Text = "Y center:";
+            // 
+            // lineButton
+            // 
+            this.lineButton.Location = new System.Drawing.Point(667, 12);
+            this.lineButton.Name = "lineButton";
+            this.lineButton.Size = new System.Drawing.Size(75, 23);
+            this.lineButton.TabIndex = 9;
+            this.lineButton.Text = "draw line";
+            this.lineButton.UseVisualStyleBackColor = true;
+            this.lineButton.Click += new System.EventHandler(this.lineButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(960, 571);
+            this.ClientSize = new System.Drawing.Size(1023, 634);
+            this.Controls.Add(this.lineButton);
+            this.Controls.Add(this.yCenterLable);
+            this.Controls.Add(this.xCenterLable);
+            this.Controls.Add(this.radiusLable);
             this.Controls.Add(this.colorButton);
             this.Controls.Add(this.yCenterTextBox);
             this.Controls.Add(this.xCenterTextBox);
@@ -115,6 +161,10 @@
         private System.Windows.Forms.TextBox yCenterTextBox;
         private System.Windows.Forms.Button colorButton;
         private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.Label radiusLable;
+        private System.Windows.Forms.Label xCenterLable;
+        private System.Windows.Forms.Label yCenterLable;
+        private System.Windows.Forms.Button lineButton;
     }
 }
 
