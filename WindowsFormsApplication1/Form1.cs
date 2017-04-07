@@ -32,15 +32,14 @@ namespace WindowsFormsApplication1
             InitializeComponent();
             bitMap = new Bitmap(1000, 1000);
             pictureBox1.Image = bitMap;// new Bitmap(700, 700);
-            radiusTextBox.Text = "Radius";
+            this.BackColor = Color.PowderBlue;
             pictureBox1.BackColor = Color.White;
-            radiusTextBox.GotFocus += (RemoveText);
-            radiusTextBox.LostFocus += (AddText);
+            
             pictureBox1.MouseDown += (mouseDownEvent);
             pictureBox1.MouseUp += (mouseUpEvent);
-            drawLine(100, 100, 100, 150, currentColor);
-            drawCircle(100,100,6, currentColor, bitMap);
-            drawPixel(10, 10, currentColor);       
+           // drawLine(100, 100, 100, 150, currentColor);
+           // drawCircle(100,100,6, currentColor, bitMap);
+           // drawPixel(10, 10, currentColor);       
         }
 
         private void mouseUpEvent(object sender, MouseEventArgs e)
@@ -71,41 +70,88 @@ namespace WindowsFormsApplication1
                     break;
 
                 case State.RADIUS:
+                    // בחירת הערך המוחלט הגבוה מבין שניהם
                     currentRadius = Math.Abs(currentX - e.X)>Math.Abs(currentY-e.Y)? Math.Abs(currentX - e.X): Math.Abs(currentY - e.Y);
                     drawCircle(currentX, currentY, currentRadius, currentColor, bitMap);
                     stateFlag = State.CERCLE_POSITION;
                     break;
-
             }
             
         }
 
-        public void RemoveText(object sender, EventArgs e)
+        /*public void RemoveText(object sender, EventArgs e)
         {
             if(!(radiusTextBox.Text!= "Radius"))
             {
                 radiusTextBox.Text = "";
             }
             
-        }
+        }*/
 
-        public void AddText(object sender, EventArgs e)
+        /*public void AddText(object sender, EventArgs e)
         {
             if (String.IsNullOrWhiteSpace(radiusTextBox.Text))
                 radiusTextBox.Text = "Radius";
-        }
+        }*/
 
 
         public void drawPixel(int x,int y,Color color)
-        {           
-            ((Bitmap)pictureBox1.Image).SetPixel(x, y, color);
+        {
+            try
+            {
+                ((Bitmap)pictureBox1.Image).SetPixel(x, y, color);
+            }      
+            catch(Exception ex)
+            {
+                return;
+            }
+            
         }
 
         
 
         public void drawLine(int startX, int startY, int endX, int endY,Color color)
         {
-            int countX = endX - startX;
+            double count;
+            double ratioX;
+            double ratioY;
+            double tempX = startX;
+            double tempY = startY;
+           
+            if (Math.Abs(startX-endX)>Math.Abs(startY-endY))
+            {
+                count = Math.Abs(startX - endX);
+            }
+            else
+            {
+                count = Math.Abs(startY - endY);
+            }
+            try
+            {
+                if(count==0)
+                {
+                    throw new Exception("לא ניתן לצייר קו בין נקודה אחת");
+                }
+                ratioX = (endX - startX) / count;
+                ratioY = (endY - startY) / count;
+
+                while (count >= 0)
+                {
+                    tempX = (tempX + ratioX);
+                    tempY = (tempY + ratioY);
+                    drawPixel((int)tempX, (int)tempY, currentColor);
+                    count--;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+
+            
+
+           /* int countX = endX - startX;
             int countY = endY - startY;
             int count = countX > countY ? countX : countY;
             int x = startX;
@@ -113,7 +159,7 @@ namespace WindowsFormsApplication1
             for(int i=0;i<count;i++,x++,y++)
             {
                 drawPixel(x,y,color);
-            }
+            }*/
         }
 
        
@@ -145,7 +191,8 @@ namespace WindowsFormsApplication1
                 else
                 {
                     p += 4 * (x - y) + 10;
-                    x++; y--;
+                    x++;
+                    y--;
                 }
             }
         }
@@ -170,10 +217,6 @@ namespace WindowsFormsApplication1
 
         private void pictureBox1_Click_1(object sender, EventArgs e)
         {
-            
-            int i = 0;
-            int currentX = Cursor.Position.X;
-            int currentY = Cursor.Position.Y;
             
         }
 
