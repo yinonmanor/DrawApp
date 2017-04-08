@@ -88,7 +88,7 @@ namespace WindowsFormsApplication1
                 case State.POLYGON_HEAD:
                     int sides = Convert.ToInt32(polygonTextBox.Text);
                     currentRadius = Math.Abs(currentX - e.X) > Math.Abs(currentY - e.Y) ? Math.Abs(currentX - e.X) : Math.Abs(currentY - e.Y);                   
-                    drawPolygon(currentX, currentY, currentRadius,sides);
+                    drawPolygon(e.X,e.Y,sides);
                     stateFlag = State.POLYGON_CENTER;
                     break;
             }
@@ -163,19 +163,6 @@ namespace WindowsFormsApplication1
             {
                 MessageBox.Show(ex.Message);
             }
-            
-
-            
-
-           /* int countX = endX - startX;
-            int countY = endY - startY;
-            int count = countX > countY ? countX : countY;
-            int x = startX;
-            int y = startY;
-            for(int i=0;i<count;i++,x++,y++)
-            {
-                drawPixel(x,y,color);
-            }*/
         }
 
        
@@ -242,9 +229,10 @@ namespace WindowsFormsApplication1
         {
             stateFlag = State.POLYGON_CENTER;
             polygonTextBox.Enabled = true;
+            polygonTextBox.Focus();
         }
 
-        private void drawPolygon(int headX,int headY,int radius,int sides)
+        private void drawPolygon(int headX,int headY,int sides)
         {
             try
             {
@@ -253,6 +241,19 @@ namespace WindowsFormsApplication1
                     throw new Exception("מצולע חייב להיות בעל שלוש צלעות לפחות");
                 }
                 float step = 360 / sides;
+                float angle = 0;
+                int count = sides;
+                int x, y;
+                for(double i=0;i<sides;i++)
+                {
+                    double radians = angle * Math.PI / 180.0;
+                    x =Convert.ToInt32((float)Math.Cos(radians) * currentRadius + headX);
+                    y = Convert.ToInt32((float)Math.Sin(-radians) * currentRadius + headY);
+                    drawLine(headX, headY, (int)x, (int) y, currentColor);
+                    angle += step;
+                    headX = x;
+                    headY = y;
+                }
 
             }
             catch (Exception ex)
