@@ -17,8 +17,11 @@ namespace WindowsFormsApplication1
         CERCLE_POSITION,
         RADIUS,
         POLYGON_CENTER,
-        POLYGON_HEAD
-
+        POLYGON_HEAD,
+        CURRVE_FIRST_DOT,
+        CURRVE_SECOND_DOT,
+        CURRVE_THIRD_DOT,
+        CURRVE_FOURTH_DOT
     };
     public partial class Form1 : Form
     {      
@@ -28,6 +31,7 @@ namespace WindowsFormsApplication1
         int currentX;
         int currentY;
         int currentRadius;
+        int[] currveDots = new int[8];
         State stateFlag;
         
         public Form1()
@@ -38,6 +42,7 @@ namespace WindowsFormsApplication1
             this.BackColor = Color.PowderBlue;
             pictureBox1.BackColor = Color.White;
             polygonTextBox.Enabled = false;
+            currveTextBox.Enabled = false;
             pictureBox1.MouseDown += (mouseDownEvent);
             pictureBox1.MouseUp += (mouseUpEvent);
            // drawLine(100, 100, 100, 150, currentColor);
@@ -52,6 +57,11 @@ namespace WindowsFormsApplication1
 
         private void mouseDownEvent(object sender, MouseEventArgs e)
         {
+            
+            int[] crvFirst = new int[2];
+            int[] crvSecond = new int[2];
+            int[] crvThird = new int[2];
+            int[] crvFourth = new int[2];
             pictureBox1.Image = bitMap;
             switch (stateFlag)
             {
@@ -90,6 +100,60 @@ namespace WindowsFormsApplication1
                     currentRadius = Math.Abs(currentX - e.X) > Math.Abs(currentY - e.Y) ? Math.Abs(currentX - e.X) : Math.Abs(currentY - e.Y);                   
                     drawPolygon(e.X,e.Y,sides);
                     stateFlag = State.POLYGON_CENTER;
+                    break;
+
+                case State.CURRVE_FIRST_DOT:
+                    currveDots[0] = e.X;
+                    currveDots[1] = e.Y;
+                    crvFirst[0] = e.X;
+                    crvFirst[1] = e.Y;
+                    drawPixel(e.X, e.Y, Color.Red);
+                    drawPixel(e.X + 1, e.Y, Color.Red);
+                    drawPixel(e.X - 1, e.Y, Color.Red);
+                    drawPixel(e.X, e.Y + 1, Color.Red);
+                    drawPixel(e.X, e.Y - 1, Color.Red);
+                    stateFlag = State.CURRVE_SECOND_DOT;
+                    break;
+
+                case State.CURRVE_SECOND_DOT:
+                    currveDots[2] = e.X;
+                    currveDots[3] = e.Y;
+                    crvSecond[0] = e.X;
+                    crvSecond[1] = e.Y;
+                    drawPixel(e.X, e.Y, Color.Red);
+                    drawPixel(e.X + 1, e.Y, Color.Red);
+                    drawPixel(e.X - 1, e.Y, Color.Red);
+                    drawPixel(e.X, e.Y + 1, Color.Red);
+                    drawPixel(e.X, e.Y - 1, Color.Red);
+                    stateFlag = State.CURRVE_THIRD_DOT;
+                    break;
+
+                case State.CURRVE_THIRD_DOT:
+                    currveDots[4] = e.X;
+                    currveDots[5] = e.Y;
+                    crvThird[0] = e.X;
+                    crvThird[1] = e.Y;
+                    drawPixel(e.X, e.Y, Color.Red);
+                    drawPixel(e.X + 1, e.Y, Color.Red);
+                    drawPixel(e.X - 1, e.Y, Color.Red);
+                    drawPixel(e.X, e.Y + 1, Color.Red);
+                    drawPixel(e.X, e.Y - 1, Color.Red);
+                    stateFlag = State.CURRVE_FOURTH_DOT;
+                    break;
+
+                case State.CURRVE_FOURTH_DOT:
+                    currveDots[6] = e.X;
+                    currveDots[7] = e.Y;
+                    crvFourth[0] = e.X;
+                    crvFourth[1] = e.Y;
+                    drawPixel(e.X, e.Y, Color.Red);
+                    drawPixel(e.X + 1, e.Y, Color.Red);
+                    drawPixel(e.X - 1, e.Y, Color.Red);
+                    drawPixel(e.X, e.Y + 1, Color.Red);
+                    drawPixel(e.X, e.Y - 1, Color.Red);
+                    stateFlag = State.CURRVE_FIRST_DOT;
+                    //drawCurrve(crvFirst, crvSecond, crvThird, crvFourth);
+                    drawCurrve(currveDots);
                     break;
             }
             
@@ -204,6 +268,7 @@ namespace WindowsFormsApplication1
         {
             stateFlag = State.CERCLE_POSITION;
             polygonTextBox.Enabled = false;
+            currveTextBox.Enabled = false;
         }
 
         private void colorButton_Click(object sender, EventArgs e)
@@ -223,12 +288,14 @@ namespace WindowsFormsApplication1
         {
             stateFlag = State.LINE_FIRST_DOT;
             polygonTextBox.Enabled = false;
+            currveTextBox.Enabled = false;
         }
 
         private void polygonButton_Click(object sender, EventArgs e)
         {
             stateFlag = State.POLYGON_CENTER;
             polygonTextBox.Enabled = true;
+            currveTextBox.Enabled = false;
             polygonTextBox.Focus();
         }
 
@@ -241,7 +308,7 @@ namespace WindowsFormsApplication1
                     throw new Exception("מצולע חייב להיות בעל שלוש צלעות לפחות");
                 }
                 float step = 360 / sides;
-                float angle = 0;
+                float angle = 2;
                 int count = sides;
                 int x, y;
                 for(double i=0;i<sides;i++)
@@ -249,7 +316,7 @@ namespace WindowsFormsApplication1
                     double radians = angle * Math.PI / 180.0;
                     x =Convert.ToInt32((float)Math.Cos(radians) * currentRadius + headX);
                     y = Convert.ToInt32((float)Math.Sin(-radians) * currentRadius + headY);
-                    drawLine(headX, headY, (int)x, (int) y, currentColor);
+                    drawLine(headX, headY,x,y, currentColor);
                     angle += step;
                     headX = x;
                     headY = y;
@@ -258,6 +325,46 @@ namespace WindowsFormsApplication1
             }
             catch (Exception ex)
             {
+                MessageBox.Show(ex.Message);
+            }
+            
+        }
+
+        private void currveButton_Click(object sender, EventArgs e)
+        {
+            polygonTextBox.Enabled = false;
+            currveTextBox.Enabled = true;
+            currveTextBox.Focus();
+            stateFlag = State.CURRVE_FIRST_DOT;
+        }
+
+        private void drawCurrve(int[] dots)
+        {
+            try
+            {
+                int sides;// = Convert.ToInt32(currveTextBox.Text);
+                bool isNumeric = int.TryParse(currveTextBox.Text, out sides);
+                if (isNumeric==false)
+                {
+                    throw new Exception("הערך חייב להיות מספרי");
+                }
+                int length = dots.Length - 2;
+                for (int i = 0; i < length; i += 2)
+                {
+                    drawLine(dots[i], dots[i + 1], dots[i + 2], dots[i + 3], currentColor);
+                }
+            }
+            catch(Exception ex)
+            {
+                int length = dots.Length;
+                for(int i=0;i<length;i+=2)
+                {
+                    drawPixel(dots[i], dots[i + 1],Color.White);
+                    drawPixel(dots[i]+1, dots[i + 1], Color.White);
+                    drawPixel(dots[i]-1, dots[i + 1], Color.White);
+                    drawPixel(dots[i], dots[i + 1]+1, Color.White);
+                    drawPixel(dots[i], dots[i + 1]-1, Color.White);
+                }
                 MessageBox.Show(ex.Message);
             }
             

@@ -35,6 +35,8 @@
             this.lineButton = new System.Windows.Forms.Button();
             this.polygonButton = new System.Windows.Forms.Button();
             this.polygonTextBox = new System.Windows.Forms.TextBox();
+            this.currveButton = new System.Windows.Forms.Button();
+            this.currveTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -94,11 +96,30 @@
             this.polygonTextBox.Size = new System.Drawing.Size(76, 20);
             this.polygonTextBox.TabIndex = 11;
             // 
+            // currveButton
+            // 
+            this.currveButton.Location = new System.Drawing.Point(419, 12);
+            this.currveButton.Name = "currveButton";
+            this.currveButton.Size = new System.Drawing.Size(82, 23);
+            this.currveButton.TabIndex = 12;
+            this.currveButton.Text = "עקומת בזייה";
+            this.currveButton.UseVisualStyleBackColor = true;
+            this.currveButton.Click += new System.EventHandler(this.currveButton_Click);
+            // 
+            // currveTextBox
+            // 
+            this.currveTextBox.Location = new System.Drawing.Point(419, 46);
+            this.currveTextBox.Name = "currveTextBox";
+            this.currveTextBox.Size = new System.Drawing.Size(82, 20);
+            this.currveTextBox.TabIndex = 13;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1023, 634);
+            this.Controls.Add(this.currveTextBox);
+            this.Controls.Add(this.currveButton);
             this.Controls.Add(this.polygonTextBox);
             this.Controls.Add(this.polygonButton);
             this.Controls.Add(this.lineButton);
@@ -122,6 +143,8 @@
         private System.Windows.Forms.Button lineButton;
         private System.Windows.Forms.Button polygonButton;
         private System.Windows.Forms.TextBox polygonTextBox;
+        private System.Windows.Forms.Button currveButton;
+        private System.Windows.Forms.TextBox currveTextBox;
     }
 }
 
