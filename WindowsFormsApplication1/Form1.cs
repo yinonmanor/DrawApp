@@ -37,6 +37,10 @@ namespace WindowsFormsApplication1
         public Form1()
         {
             InitializeComponent();
+            /*this.TopMost = true;
+            this.WindowState = FormWindowState.Maximized;
+            pictureBox1.Width = this.Width;
+            pictureBox1.Height = this.Height;*/
             bitMap = new Bitmap(1000, 1000);
             pictureBox1.Image = bitMap;// new Bitmap(700, 700);
             this.BackColor = Color.PowderBlue;
@@ -57,11 +61,6 @@ namespace WindowsFormsApplication1
 
         private void mouseDownEvent(object sender, MouseEventArgs e)
         {
-            
-            int[] crvFirst = new int[2];
-            int[] crvSecond = new int[2];
-            int[] crvThird = new int[2];
-            int[] crvFourth = new int[2];
             pictureBox1.Image = bitMap;
             switch (stateFlag)
             {
@@ -104,53 +103,45 @@ namespace WindowsFormsApplication1
 
                 case State.CURRVE_FIRST_DOT:
                     currveDots[0] = e.X;
-                    currveDots[1] = e.Y;
-                    crvFirst[0] = e.X;
-                    crvFirst[1] = e.Y;
-                    drawPixel(e.X, e.Y, Color.Red);
-                    drawPixel(e.X + 1, e.Y, Color.Red);
-                    drawPixel(e.X - 1, e.Y, Color.Red);
-                    drawPixel(e.X, e.Y + 1, Color.Red);
-                    drawPixel(e.X, e.Y - 1, Color.Red);
+                    currveDots[1] = e.Y;                
+                    drawPixel(e.X, e.Y, currentColor);
+                    drawPixel(e.X + 1, e.Y, currentColor);
+                    drawPixel(e.X - 1, e.Y, currentColor);
+                    drawPixel(e.X, e.Y + 1, currentColor);
+                    drawPixel(e.X, e.Y - 1, currentColor);
                     stateFlag = State.CURRVE_SECOND_DOT;
                     break;
 
                 case State.CURRVE_SECOND_DOT:
                     currveDots[2] = e.X;
-                    currveDots[3] = e.Y;
-                    crvSecond[0] = e.X;
-                    crvSecond[1] = e.Y;
-                    drawPixel(e.X, e.Y, Color.Red);
-                    drawPixel(e.X + 1, e.Y, Color.Red);
-                    drawPixel(e.X - 1, e.Y, Color.Red);
-                    drawPixel(e.X, e.Y + 1, Color.Red);
-                    drawPixel(e.X, e.Y - 1, Color.Red);
+                    currveDots[3] = e.Y;                
+                    drawPixel(e.X, e.Y, currentColor);
+                    drawPixel(e.X + 1, e.Y, currentColor);
+                    drawPixel(e.X - 1, e.Y, currentColor);
+                    drawPixel(e.X, e.Y + 1, currentColor);
+                    drawPixel(e.X, e.Y - 1, currentColor);
                     stateFlag = State.CURRVE_THIRD_DOT;
                     break;
 
                 case State.CURRVE_THIRD_DOT:
                     currveDots[4] = e.X;
-                    currveDots[5] = e.Y;
-                    crvThird[0] = e.X;
-                    crvThird[1] = e.Y;
-                    drawPixel(e.X, e.Y, Color.Red);
-                    drawPixel(e.X + 1, e.Y, Color.Red);
-                    drawPixel(e.X - 1, e.Y, Color.Red);
-                    drawPixel(e.X, e.Y + 1, Color.Red);
-                    drawPixel(e.X, e.Y - 1, Color.Red);
+                    currveDots[5] = e.Y;                   
+                    drawPixel(e.X, e.Y, currentColor);
+                    drawPixel(e.X + 1, e.Y, currentColor);
+                    drawPixel(e.X - 1, e.Y, currentColor);
+                    drawPixel(e.X, e.Y + 1, currentColor);
+                    drawPixel(e.X, e.Y - 1, currentColor);
                     stateFlag = State.CURRVE_FOURTH_DOT;
                     break;
 
                 case State.CURRVE_FOURTH_DOT:
                     currveDots[6] = e.X;
                     currveDots[7] = e.Y;
-                    crvFourth[0] = e.X;
-                    crvFourth[1] = e.Y;
-                    drawPixel(e.X, e.Y, Color.Red);
-                    drawPixel(e.X + 1, e.Y, Color.Red);
-                    drawPixel(e.X - 1, e.Y, Color.Red);
-                    drawPixel(e.X, e.Y + 1, Color.Red);
-                    drawPixel(e.X, e.Y - 1, Color.Red);
+                    drawPixel(e.X, e.Y, currentColor);
+                    drawPixel(e.X + 1, e.Y, currentColor);
+                    drawPixel(e.X - 1, e.Y, currentColor);
+                    drawPixel(e.X, e.Y + 1, currentColor);
+                    drawPixel(e.X, e.Y - 1, currentColor);
                     stateFlag = State.CURRVE_FIRST_DOT;
                     //drawCurrve(crvFirst, crvSecond, crvThird, crvFourth);
                     drawCurrve(currveDots);
@@ -208,7 +199,7 @@ namespace WindowsFormsApplication1
             }
             try
             {
-                if(count==0)
+                if(count==0 && stateFlag==State.LINE_SECOND_DOT)
                 {
                     throw new Exception("לא ניתן לצייר קו בין נקודה אחת");
                 }
@@ -279,10 +270,7 @@ namespace WindowsFormsApplication1
             }
         }
 
-        private void pictureBox1_Click_1(object sender, EventArgs e)
-        {
-            
-        }
+       
 
         private void lineButton_Click(object sender, EventArgs e)
         {
@@ -307,7 +295,7 @@ namespace WindowsFormsApplication1
                 {
                     throw new Exception("מצולע חייב להיות בעל שלוש צלעות לפחות");
                 }
-                float step = 360 / sides;
+                float step = 360.0f / sides;
                 float angle = 2;
                 int count = sides;
                 int x, y;
@@ -340,19 +328,58 @@ namespace WindowsFormsApplication1
 
         private void drawCurrve(int[] dots)
         {
+            // חישוב המשתנים ע"פ המטריצה מהמצגת
+            int ax, ay, bx, by, cx, cy, dx, dy;
             try
             {
-                int sides;// = Convert.ToInt32(currveTextBox.Text);
-                bool isNumeric = int.TryParse(currveTextBox.Text, out sides);
+                 ax = (dots[0] * (-1)) + (dots[2] * 3) - (dots[4] * 3) + (dots[6]);
+                 bx = (dots[0] * 3) - (dots[2] * 6) + (dots[4] * 3);
+                 cx = (dots[0] * (-3)) + (dots[2] * 3);
+                 dx = dots[0];
+                 ay = (dots[1] * (-1)) + (dots[3] * 3) - (dots[5] * 3) + (dots[7]);
+                 by = (dots[1] * 3) - (dots[3] * 6) + (dots[5] * 3);
+                 cy = (dots[1] * (-3)) + (dots[3] * 3);
+                 dy = dots[1];
+            }
+
+            catch
+            {
+                throw new Exception("איתחול משתני המטריצה נכשל");
+            }
+           
+            try
+            {
+                int lines;
+                bool isNumeric = int.TryParse(currveTextBox.Text, out lines);
                 if (isNumeric==false)
                 {
                     throw new Exception("הערך חייב להיות מספרי");
                 }
-                int length = dots.Length - 2;
-                for (int i = 0; i < length; i += 2)
+                // תחילת ציור העקומה תתחיל מהנקודה הראשונה שנקלטה ע"י המשתמש
+                double firstPosX = Convert.ToDouble(dots[0]);
+                double firstPosY = Convert.ToDouble(dots[1]);
+                for(int i = 0; i <= lines; i++)
                 {
-                    drawLine(dots[i], dots[i + 1], dots[i + 2], dots[i + 3], currentColor);
+                    // חישוב המקדם למקטע הנוכחי
+                    double t = Convert.ToDouble(i) / Convert.ToDouble(lines);
+                    // חישוב הנקודה הבאה ע"פ הפולינום מדרגה שלישית מהמצגת
+                    double nextPosX = (ax * Math.Pow(t, 3)) + (bx * Math.Pow(t, 2)) + (cx * t) + dx;
+                    double nextPosY = (ay * Math.Pow(t, 3)) + (by * Math.Pow(t, 2)) + (cy * t) + dy;
+                    drawLine(Convert.ToInt32(firstPosX), Convert.ToInt32(firstPosY), Convert.ToInt32(nextPosX), Convert.ToInt32(nextPosY), currentColor);
+                    firstPosX = nextPosX;
+                    firstPosY = nextPosY;
                 }
+                //מחיקת שתי הנקודות שדרכם לא עוברת העקומה
+                int length = dots.Length-2;
+                for(int i = 2; i < length; i+=2)
+                {
+                    drawPixel(dots[i], dots[i + 1], Color.White);
+                    drawPixel(dots[i] + 1, dots[i + 1], Color.White);
+                    drawPixel(dots[i] - 1, dots[i + 1], Color.White);
+                    drawPixel(dots[i], dots[i + 1] + 1, Color.White);
+                    drawPixel(dots[i], dots[i + 1] - 1, Color.White);
+                }
+            
             }
             catch(Exception ex)
             {
@@ -368,6 +395,13 @@ namespace WindowsFormsApplication1
                 MessageBox.Show(ex.Message);
             }
             
+        }
+
+        private void cleanButton_Click(object sender, EventArgs e)
+        {
+            bitMap = new Bitmap(1000, 1000);
+            pictureBox1.Image = bitMap;
+
         }
     }
 }

@@ -37,6 +37,7 @@
             this.polygonTextBox = new System.Windows.Forms.TextBox();
             this.currveButton = new System.Windows.Forms.Button();
             this.currveTextBox = new System.Windows.Forms.TextBox();
+            this.cleanButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,7 +48,7 @@
             this.pictureBox1.Size = new System.Drawing.Size(948, 529);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click_1);
+          //  this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click_1);
             // 
             // circleButton
             // 
@@ -113,11 +114,22 @@
             this.currveTextBox.Size = new System.Drawing.Size(82, 20);
             this.currveTextBox.TabIndex = 13;
             // 
+            // cleanButton
+            // 
+            this.cleanButton.Location = new System.Drawing.Point(132, 12);
+            this.cleanButton.Name = "cleanButton";
+            this.cleanButton.Size = new System.Drawing.Size(91, 23);
+            this.cleanButton.TabIndex = 14;
+            this.cleanButton.Text = "נקה דף";
+            this.cleanButton.UseVisualStyleBackColor = true;
+            this.cleanButton.Click += new System.EventHandler(this.cleanButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1023, 634);
+            this.Controls.Add(this.cleanButton);
             this.Controls.Add(this.currveTextBox);
             this.Controls.Add(this.currveButton);
             this.Controls.Add(this.polygonTextBox);
@@ -126,8 +138,9 @@
             this.Controls.Add(this.colorButton);
             this.Controls.Add(this.circleButton);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Yinon & Netanel Drow App";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -145,6 +158,7 @@
         private System.Windows.Forms.TextBox polygonTextBox;
         private System.Windows.Forms.Button currveButton;
         private System.Windows.Forms.TextBox currveTextBox;
+        private System.Windows.Forms.Button cleanButton;
     }
 }
 
